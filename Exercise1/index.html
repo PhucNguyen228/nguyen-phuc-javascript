@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Exercise1</title>
+  </head>
+  <body>
+    <div class="form-enter-data">
+      <form>
+        <label for="input">Input (Alphabets + Numbers):</label><br />
+        <input
+          type="text"
+          id="input"
+          name="input"
+          pattern="[A-Za-z]+[0-9]+"
+          required
+        /><br /><br />
+        <input class="enter" type="submit" value="submit" />
+        <input class="reset" type="reset" value="reset form" />
+      </form>
+    </div>
+    <div class="reset-form"></div>
+  </body>
+</html>
+
+<script src="/main.js"></script>
