@@ -31,40 +31,22 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Exercise2</title>
   </head>
   <body>
-    <div class="container" >
+    <div class="container">
       <form method="post" autocomplete="off">
-        <div class="form-group mt-2">
-          <label for="language">language</label>
+        <div class="form-group mt-5">
+          <label for="search">Search</label>
           <input
-            type="language"
+            type="search"
             class="form-control upload-img"
-            id="language"
-            placeholder="language"
+            id="search"
+            placeholder="Tìm kiếm"
           />
         </div>
-        <div class="form-group mt-3">
-          <label for="name">name</label>
-          <input
-            type="name"
-            class="form-control"
-            id="name"
-            placeholder="name"
-          />
-        </div>
-        <div class="form-group mt-3">
-          <label for="name">description</label>
-          <input
-            type="description"
-            class="form-control"
-            id="description"
-            placeholder="description"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary mt-5 mb-4" id="submit">
+        <button type="submit" class="btn btn-primary mt-3 mb-4" id="submit">
           Submit
         </button>
       </form>
@@ -73,25 +55,25 @@
 </html>
 <script>
   $(document).ready(function () {
-    $.ajaxSetup({
-      headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-    });
     // Replace with your own API key
     const apiKey = "cd29455cb8847b1c5b830ca5e4f39cad";
+
     // ajax get api
     function loadPage() {
-      $.ajax({
-        url: `https://api.themoviedb.org/3/movie/550?api_key=` + apiKey,
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-          console.log(data.poster_path);
-          let html = "";
-          html += `<div class="container mt-3">
+      for (let id_movie = 0; id_movie < 50; id_movie++) {
+        $.ajax({
+          url:
+            `https://api.themoviedb.org/3/movie/` +
+            id_movie +
+            `?api_key=` +
+            apiKey,
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            // console.log(data);
+            let html = "";
+            html += `<div class="container mt-3">
       <div class="row">
-        <div class="col-4">
           <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" alt="" />
         </div>
         <div class="col-8">
@@ -100,14 +82,14 @@
         </div>
       </div>
     </div>`;
-          $("body").append(html);
-        },
-        error: function (error) {
-          console.log(error);
-        },
-      });
+            $("body").append(html);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      }
     }
-
     $.ajax({
       url: `https://api.themoviedb.org/3/movie/550?api_key=` + apiKey,
       type: "GET",
@@ -151,22 +133,20 @@
         contentType: "application/json",
         data: JSON.stringify(payLoad),
         success: function (response) {
-          //     // Handle successful response here
-          //     let html = "";
-          //     html += `<div class="container mt-3">
-          //   <div class="row">
-          //     <div class="col-4">
-          //       <img src="https://image.tmdb.org/t/p/w500${response.language_path}" alt="" />
-          //     </div>
-          //     <div class="col-8">
-          //       <h1>${response.name}</h1>
-          //       <p>${response.description}</p>
-          //     </div>
-          //   </div>
-          // </div>`;
-          //     $("body").append(html);
-
-          loadPage();
+          // Handle successful response here
+          let html = "";
+          html += `<div class="container mt-3">
+            <div class="row">
+              <div class="col-4">
+                <img src="https://image.tmdb.org/t/p/w500${response.language_path}" alt="" />
+              </div>
+              <div class="col-8">
+                <h1>${response.name}</h1>
+                <p>${response.description}</p>
+              </div>
+            </div>
+          </div>`;
+          $("body").append(html);
         },
         error: function (xhr, status, error) {
           // Handle error here
